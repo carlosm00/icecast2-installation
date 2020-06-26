@@ -115,7 +115,7 @@ comp_contra
 #
     cd /etc/icecast2 1>>/tmp/icecast2_installation/success_icecast2.log 2>>/tmp/icecast2_installation/error_icecast2.log
     mv /etc/icecast2/icecast.xml /etc/icecast2/icecast--.xml
-    wget -q https://github.com/carlosm00/icecast2-installation/icecast_template.xml icecast.xml 1>>/tmp/icecast2_installation/success_icecast2.log 2>>/tmp/icecast2_installation/error_icecast2.log
+    wget -q https://raw.githubusercontent.com/carlosm00/icecast2-installation/master/icecast_template.xml icecast.xml 1>>/tmp/icecast2_installation/success_icecast2.log 2>>/tmp/icecast2_installation/error_icecast2.log
     sed -i "s/{LOCATION}/$LOC/g" icecast.xml
     sed -i "s/{ADMIN}/$ADM/g" icecast.xml
     sed -i "s/{PASSWD}/$CON/g" icecast.xml
