@@ -165,7 +165,7 @@ EOL
 cert () {
 # Certbot # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     apt-get install certbot -y 1>>/tmp/icecast2_installation/success_icecast2.log 2>>/tmp/icecast2_installation/error_icecast2.log
-    certbot certonly --webroot-path="/usr/share/icecast2/web" -d $DOM 2>>/tmp/icecast2_installation/error_icecast2.log
+    certbot certonly --webroot-path /usr/share/icecast2/web -d $DOM 2>>/tmp/icecast2_installation/error_icecast2.log
 # Keys # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     cat /etc/letsencrypt/live/$DOM/fullchain.pem /etc/letsencrypt/live/$DOM/privkey.pem > /etc/icecast2/bundle.pem 2>>/tmp/icecast2_installation/error_icecast2.log
     chmod 666 /etc/icecast2/bundle.pem 1>>/tmp/icecast2_installation/success_icecast2.log 2>>/tmp/icecast2_installation/error_icecast2.log
