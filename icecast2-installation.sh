@@ -168,6 +168,7 @@ cert () {
     apt-get install certbot -y 1>>/tmp/icecast2_installation/success_icecast2.log 2>>/tmp/icecast2_installation/error_icecast2.log
 # XML file change for accessing through port 80
     sed -i "s+<port>$PORT</port>+<port>80</port>+g" /etc/icecast2/icecast.xml
+    service icecast2 restart 1>>/tmp/icecast2_installation/success_icecast2.log 2>>/tmp/icecast2_installation/error_icecast2.log
 # Certbor certificate
     certbot certonly --webroot-path /usr/share/icecast2/web -d $DOM 2>>/tmp/icecast2_installation/error_icecast2.log
 # Keys # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
