@@ -128,7 +128,7 @@ comp_contra
 #
 # /etc/default/icecast2 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
-cat << 'EOL' > /etc/default/icecast
+cat << 'EOL' > /etc/default/icecast2
 # Defaults for icecast2 initscript
 # sourced by /etc/init.d/icecast2
 # installed at /etc/default/icecast2 by the maintainer scripts
@@ -200,7 +200,7 @@ then
     sudo sh -c "echo deb http://download.opensuse.org/repositories/multimedia:/xiph/$wOS$OSV/ ./ >>/etc/apt/sources.list.d/icecast.list" 1>>/tmp/icecast2_installation/success_icecast2.log 2>>/tmp/icecast2_installation/error_icecast2.log
     wget -qO - http://icecast.org/multimedia-obs.key | sudo apt-key add - 1>>/tmp/icecast2_installation/success_icecast2.log 2>>/tmp/icecast2_installation/error_icecast2.log
     apt-get update 1>>/tmp/icecast2_installation/success_icecast2.log 2>>/tmp/icecast2_installation/error_icecast2.log
-    apt -qq install -y curl icecast2 sed 1>>/tmp/icecast2_installation/success_icecast2.log 2>>/tmp/icecast2_installation/error_icecast2.log
+    apt -qq install -y curl icecast2 sed 2>>/tmp/icecast2_installation/error_icecast2.log
 # [EN] Execution function for 2 / [ES] Ejecución de función para 2
     conf
 # [EN] Execution function for 3 / [ES] Ejecución de función para 3
