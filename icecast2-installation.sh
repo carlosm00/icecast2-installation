@@ -28,7 +28,7 @@ contra () {
     echo -n "[EN] Write your icecast2 admin password / [Es] Escriba su contraseña de administración de icecast2: "
     read CON
     clear
-    echo -n "[EN] Repeat it, please / [ES] Repítala, por favor :"
+    echo -n "[EN] Repeat it, please / [ES] Repítala, por favor : "
     read CON2
     clear
 }
@@ -49,14 +49,14 @@ conf () {
 #
 # DOMAIN / DOMINIO # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
-    echo -n "[EN] Write your domain / [Es] Escriba su dominio : "
+    echo -en "[EN] Write your domain as in the example below / [Es] Escriba su dominio como en el ejemplo: \n    your.domain.com \n[EN] DOMAIN / [ES] DOMINIO : "
     read DOM
     echo $DOM | grep "." >>/tmp/icecast2_installation/success_icecast2.log
     if [ $? != 0 ]
     then
         echo "[EN] Your domain name must contain at least a dot / [ES] Su dominio debe contener mínimo un punto "
         echo "Example/Ejemplo: example.com "
-        echo -n "[EN] Write your domain / [Es] Escriba su dominio : "
+        echo -en "[EN] Write your domain as in the example below / [Es] Escriba su dominio como en el ejemplo: \n    your.domain.com \n[EN] DOMAIN / [ES] DOMINIO : "
         read DOM
     fi
 #
@@ -86,7 +86,7 @@ comp_contra
 # PORT / PUERTO # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
     clear
-    echo -n "[EN] Icecast2 client port / [ES] Puerto para la conexión cliente de icecast2 :"
+    echo -n "[EN] Icecast2 client port / [ES] Puerto para la conexión cliente de icecast2 : "
     read PORT
 #
 # SSL
@@ -102,13 +102,14 @@ comp_contra
 #
 # CHECK / COMPROBACIÓN # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
-    echo -en "[EN] CHECK THE INFORMATION GIVEN / [ES] COMPRUEBE LA INFORMACIÓN HABILITADA \n    DOMAIN: $DOM \n    LOCATION: $LOC \n    ADMIN EMAIL: $ADM \n    PORT: $PORT \n    SSL: $SL \n[EN] Is it correct ? / [ES] ¿Es correcto?: \n    [Y/n]"
+    echo -en "[EN] CHECK THE INFORMATION GIVEN / [ES] COMPRUEBE LA INFORMACIÓN HABILITADA \n    DOMAIN: $DOM \n    LOCATION: $LOC \n    ADMIN EMAIL: $ADM \n    PORT: $PORT \n    SSL: $SL \n[EN] Is it correct ? / [ES] ¿Es correcto?: \n    [Y/n]: "
     read
     if [[ $REPLY != "y" ]] && [[ $REPLY != "Y" ]]
     then 
         echo "[EN] Sorry, but you'll have to execute this script again... / [ES] Lo sentimos, pero tendrá que ejecutar este script de nuevo..."
     else
         echo "[EN] Great! / [ES] ¿Genial!"
+        echo -e "DOMAIN: $DOM \n    LOCATION: $LOC \n    ADMIN EMAIL: $ADM \n    PORT: $PORT \n    SSL: $SL " >>/tmp/icecast2_installation/success_icecast2.log
     fi
 #
 # icecast.xml config # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -165,6 +166,9 @@ EOL
 cert () {
 # Certbot # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     apt-get install certbot -y 1>>/tmp/icecast2_installation/success_icecast2.log 2>>/tmp/icecast2_installation/error_icecast2.log
+# XML file change for accessing through port 80
+    sed -i "s+<port>$PORT</port>+<port>80</port>+g" /etc/icecast2/icecast.xml
+# Certbor certificate
     certbot certonly --webroot-path /usr/share/icecast2/web -d $DOM 2>>/tmp/icecast2_installation/error_icecast2.log
 # Keys # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     cat /etc/letsencrypt/live/$DOM/fullchain.pem /etc/letsencrypt/live/$DOM/privkey.pem > /etc/icecast2/bundle.pem 2>>/tmp/icecast2_installation/error_icecast2.log
@@ -176,6 +180,7 @@ cert () {
 # XML file reconfiguration / Reconfiguración del archivo XML # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 sed -i "s+<!-- {SSL_CERT} -->+<ssl-certificate>/etc/icecast2/bundle.pem</ssl-certificate>+g" /etc/icecast2/icecast.xml
 sed -i "s+<ssl>0</ssl>+<ssl>1</ssl>+g" /etc/icecast2/icecast.xml
+sed -i "s+<port>80</port>+<port>$PORT</port>+g" /etc/icecast2/icecast.xml
 #
 service icecast2 restart 1>>/tmp/icecast2_installation/success_icecast2.log 2>>/tmp/icecast2_installation/error_icecast2.log
 }
