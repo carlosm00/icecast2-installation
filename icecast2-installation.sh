@@ -174,7 +174,7 @@ cert () {
     echo "post_hook = cat /etc/letsencrypt/live/$DOM/fullchain.pem /etc/letsencrypt/live/$DOM/privkey.pem > /etc/icecast2/bundle.pem && service icecast2 restart" >> /etc/letsencrypt/renewal/$DOM.conf
     echo "[[webroot_map]]" >> /etc/letsencrypt/renewal/$DOM.conf
 # XML file reconfiguration / Reconfiguración del archivo XML # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-sed -i "s+<!-- {SSL_CERT} -->+<ssl-certificate>/usr/share/icecast2/icecast2.pem</ssl-certificate>+g" /etc/icecast2/icecast.xml
+sed -i "s+<!-- {SSL_CERT} -->+<ssl-certificate>/etc/icecast2/bundle.pem</ssl-certificate>+g" /etc/icecast2/icecast.xml
 sed -i "s+<ssl>0</ssl>+<ssl>1</ssl>+g" /etc/icecast2/icecast.xml
 #
 service icecast2 restart 1>>/tmp/icecast2_installation/success_icecast2.log 2>>/tmp/icecast2_installation/error_icecast2.log
