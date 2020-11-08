@@ -16,6 +16,9 @@ Execute these commands on the terminal:
    ./icecast2-installation.sh
 ```
   The main script will download the XML template and change it according to the user's input.
+  
+## Extension:
+The final service can be easily modified as any other web service. This means that CSS and JS stylesheets can be added to change the style of the main service (as on this [Sintonizate](https://www.sintonizate957.com/audio-en-vivo-2/) service) or simply inyect the service on your main web service (as on [Sintonizate](https://www.sintonizate957.com/) landingpage).
 
 # [ES]
 Debe ser ejecutado como ROOT. Scripts de instalación para:
@@ -31,3 +34,6 @@ Ejecute estos comandos en la terminal:
   ./icecast2-installation.sh
 ```
   El script principal descargará la plantilla XML y la cambiará de acuerdo a los parámetros de entrada del usuario.
+
+## Extensión:
+El servicio final puede ser modificado fácilemente como con cualquier otro servicio web. Esto significa que se puede añadir hojas de estilo en CSS o JS para cambiar el estilo como servicio principal (como en este servicio de [Sintonizate](https://www.sintonizate957.com/audio-en-vivo-2/)) o simplemente inyectar este servcio en tu servicio web principal (como en la landing page de [Sintonizate](https://www.sintonizate957.com/)).
